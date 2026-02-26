@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "News Wave",
+    "slug": "whatapp-agent",
+    "version": "1.1.1",
+    "extra": {
+      "eas": {
+        "projectId": "a0b92eb3-4da9-4dc8-a576-4da0aaab9505"
+      }
+    },
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#080b12"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.angoth.newswave"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#080b12"
+      },
+      "package": "com.angoth.newswave",
+      "usesCleartextTraffic": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}
