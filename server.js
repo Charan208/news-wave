@@ -355,28 +355,7 @@ app.get("/", requireWebAuth, async (req, res) => {
                 </form>
             </div>
 
-            <div style="text-align: left; background: #1a1a1a; padding: 2rem; border-radius: 1.5rem; border: 1px solid #333; margin-bottom: 2rem;">
-                <div class="key-label" style="margin-bottom: 1.5rem;">Personal API Keys (Optional)</div>
-                <form action="/api/user/settings" method="POST" id="settings-form">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.7rem; color: #666; display: block; margin-bottom: 0.5rem;">NVIDIA NIM API KEY</label>
-                        <input type="password" name="keys[nvidia]" value="${user.keys?.nvidia || ''}" style="width: 100%; background: #000; border: 1px solid #333; color: #00ffcc; padding: 0.8rem; border-radius: 0.5rem; font-family: monospace;">
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.7rem; color: #666; display: block; margin-bottom: 0.5rem;">THENEWSAPI KEY</label>
-                        <input type="password" name="keys[thenewsapi]" value="${user.keys?.thenewsapi || ''}" style="width: 100%; background: #000; border: 1px solid #333; color: #00ffcc; padding: 0.8rem; border-radius: 0.5rem; font-family: monospace;">
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.7rem; color: #666; display: block; margin-bottom: 0.5rem;">NEWSAPI.ORG KEY</label>
-                        <input type="password" name="keys[newsapi]" value="${user.keys?.newsapi || ''}" style="width: 100%; background: #000; border: 1px solid #333; color: #00ffcc; padding: 0.8rem; border-radius: 0.5rem; font-family: monospace;">
-                    </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="font-size: 0.7rem; color: #666; display: block; margin-bottom: 0.5rem;">WORLDNEWSAPI KEY</label>
-                        <input type="password" name="keys[worldnewsapi]" value="${user.keys?.worldnewsapi || ''}" style="width: 100%; background: #000; border: 1px solid #333; color: #00ffcc; padding: 0.8rem; border-radius: 0.5rem; font-family: monospace;">
-                    </div>
-                    <button type="submit" style="background: #00ffcc; color: #000; font-weight: 900; border: none; padding: 1rem; border-radius: 0.8rem; width: 100%; cursor: pointer;">SAVE CONFIGURATION</button>
-                </form>
-            </div>
+
             
             <p class="hint">
                 Enter your Server URL and this Connection Key in the mobile app to sync your data. 
@@ -398,7 +377,7 @@ app.post("/auth/regenerate-key", requireWebAuth, async (req, res) => {
   const newKey = generateKey();
   await dbHelpers.updateUser(req.user.id || req.user._id, { pairingKey: newKey });
   console.log(`[AUTH] Key regenerated for user: ${req.user.username}`);
-  res.json({ success: true, pairingKey: newKey });
+  res.redirect('/');
 });
 
 // Mobile App Linking Endpoint
