@@ -491,21 +491,23 @@ function saveSettings() {
 }
 
 // ── Load persisted state on startup ─────────────────────────────────
-(function loadPersisted() {
-  // Restore all user schedulers
-  const users = db.get("users").value();
-  users.forEach(user => {
-    const conf = user.settings?.scheduler;
-    if (conf && conf.enabled && conf.cronExpr && cron.validate(conf.cronExpr)) {
-      const job = cron.schedule(conf.cronExpr, async () => {
-        console.log(`⏰ [CRON] User:${user.username} | cats:${conf.categories.join(",")}`);
-        await fetchAndAnalyze(conf.categories, conf.count, conf.autoSend, user.id);
-      });
-      userJobs.set(user.id, job);
-      console.log(`⏰ Restored scheduler for ${user.username}: ${conf.cronExpr}`);
-    }
-  });
-})();
+async function loadPersisted() {
+  try {
+    const users = await dbHelpers.getAllUsers();
+    users.forEach(user => {
+      const conf = user.settings?.scheduler;
+      if (conf && conf.enabled && conf.cronExpr && cron.validate(conf.cronExpr)) {
+        const job = cron.schedule(conf.cronExpr, async () => {
+          console.log(`⏰ [CRON] User:${user.username} | cats:${conf.categories.join(",")}`);
+          await fetchAndAnalyze(conf.categories, conf.count, conf.autoSend, user.id || user._id);
+        });
+        userJobs.set(user.id || user._id, job);
+        console.log(`⏰ Restored scheduler for ${user.username}: ${conf.cronExpr}`);
+      }
+    });
+  } catch (e) { console.error("⚠️  Failed to restore schedulers:", e.message); }
+}
+setTimeout(loadPersisted, 1000);
 
 // ─────────────────────────────────────────────────────────────────
 // KEYWORD MAP
