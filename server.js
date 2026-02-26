@@ -413,12 +413,12 @@ app.post("/auth/link-app", express.json(), async (req, res) => {
     console.log(`[LINK-APP] ✅ Success for user: ${user.username}`);
     // Token strictly includes the pairingKey used to link
     const token = jwt.sign({
-      id: user.id,
+      id: user.id || user._id,
       username: user.username,
       pairingKey: user.pairingKey
     }, JWT_SECRET, { expiresIn: "30d" });
 
-    res.json({ success: true, token, user: { id: user.id, username: user.username, keys: user.keys } });
+    res.json({ success: true, token, user: { id: user.id || user._id, username: user.username, keys: user.keys } });
   } else {
     console.log(`[LINK-APP] ❌ Failed - invalid key`);
     res.status(403).json({ error: "Invalid Connection Key" });
