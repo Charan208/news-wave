@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "News Wave",
+    "slug": "news-wave",
+    "extra": {
+      "eas": {
+        "projectId": "a0b92eb3-4da9-4dc8-a576-4da0aaab9505"
+      }
+    },
+    "android": {
+      "package": "com.oldbread.newswave"
+    }
+  }
+}

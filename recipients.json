@@ -1,0 +1,18 @@
+[
+  {
+    "phone": "+917780285693",
+    "name": "Recipient",
+    "active": true,
+    "addedAt": "2026-02-23T15:04:55.873Z",
+    "lastSent": "2026-02-23T15:05:24.477Z",
+    "sentCount": 1
+  },
+  {
+    "phone": "+917416892468",
+    "name": "preetham",
+    "active": true,
+    "addedAt": "2026-02-23T15:09:32.021Z",
+    "lastSent": null,
+    "sentCount": 0
+  }
+]

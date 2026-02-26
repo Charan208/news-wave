@@ -1,0 +1,9 @@
+.env
+db.json
+node_modules
+.expo
+dist
+build
+*.log
+bin
+obj

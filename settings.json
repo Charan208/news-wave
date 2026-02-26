@@ -1,0 +1,12 @@
+{
+  "cronExpr": "*/10 * * * *",
+  "categories": [
+    "Hacking & Exploits",
+    "Technology",
+    "Cybersecurity",
+    "AI Agents",
+    "AI Tools & Releases"
+  ],
+  "count": 5,
+  "autoSend": true
+}
