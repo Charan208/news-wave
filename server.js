@@ -44,6 +44,7 @@ const util = require("util");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const { User, History, Recipient } = require("./models");
 
 // ── Database Selection (Local vs Mongo) ──────────────────────────
