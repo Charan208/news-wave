@@ -51,9 +51,10 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const IS_MONGO = !!MONGODB_URI;
 
 if (IS_MONGO) {
+  console.log("🔗 Connecting to MongoDB Atlas...");
   mongoose.connect(MONGODB_URI)
     .then(() => console.log("✅ Connected to MongoDB Atlas"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+    .catch(err => console.error("❌ MongoDB Connection Error:", err.message));
 } else {
   // ── Persistent Storage (lowdb v1) ──────────────────────────────────
   const low = require("lowdb");
@@ -298,16 +299,21 @@ app.post("/register", express.urlencoded({ extended: true }), async (req, res) =
 });
 
 app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
-  const { username, password } = req.body;
-  const user = await dbHelpers.findUser({ username });
+  try {
+    const { username, password } = req.body;
+    const user = await dbHelpers.findUser({ username });
 
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.redirect('/login?error=Invalid credentials');
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.redirect('/login?error=Invalid credentials');
+    }
+
+    const token = jwt.sign({ id: user.id || user._id, username: user.username }, JWT_SECRET, { expiresIn: '7d' });
+    res.cookie('web_session', token, { httpOnly: true, secure: false });
+    res.redirect('/');
+  } catch (e) {
+    console.error("[AUTH] Login Error:", e.message);
+    res.status(500).send("Internal Server Error: " + e.message);
   }
-
-  const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '7d' });
-  res.cookie('web_session', token, { httpOnly: true, secure: false }); // secure: true in production
-  res.redirect('/');
 });
 
 // Admin Dashboard (Protected)
