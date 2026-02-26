@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // For Android EMULATOR use: http://10.0.2.2:3001
 // For real device on same WiFi use: http://192.168.8.94:3001
-export const SERVER = "https://d151b9abdbe007.lhr.life";
+export const SERVER = "https://news-wave.onrender.com";
 export const DEFAULT_KEY = "60D1RH77";
 
 export const getAuthToken = async () => await AsyncStorage.getItem('auth_token');
