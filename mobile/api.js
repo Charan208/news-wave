@@ -26,6 +26,7 @@ const handleFailure = async () => {
         await AsyncStorage.removeItem('pairing_key');
         await AsyncStorage.removeItem('auth_token');
         failCount = 0;
+        // Optionally reload or alert the user
     }
 };
 
@@ -39,7 +40,7 @@ export const api = {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             };
             const res = await fetch(`${baseUrl}${path}`, { headers }).then(r => r.json());
-            failCount = 0;
+            failCount = 0; // Success! Reset counter
             return res;
         } catch (e) {
             await handleFailure();
@@ -56,7 +57,7 @@ export const api = {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             };
             const res = await fetch(`${baseUrl}${path}`, { method: "POST", headers, body: JSON.stringify(body) }).then(r => r.json());
-            failCount = 0;
+            failCount = 0; // Success! Reset counter
             return res;
         } catch (e) {
             await handleFailure();
