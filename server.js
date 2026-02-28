@@ -769,9 +769,9 @@ async function fetchAndAnalyze(categories, count, autoSend = false, userId = nul
 }
 
 // ── History
-app.get("/api/history", (req, res) => {
+app.get("/api/history", async (req, res) => {
   const userId = req.user.id;
-  const history = db.get("history").filter({ userId }).value();
+  const history = await dbHelpers.getHistory(userId);
   res.json({ digests: history, total: history.length });
 });
 
