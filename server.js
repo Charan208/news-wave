@@ -710,7 +710,7 @@ async function fetchAndAnalyze(categories, count, autoSend = false, userId = nul
   const keywords = getKeywordsForCategories(categories);
 
   // Get user keys if available
-  const user = userId ? db.get("users").find({ id: userId }).value() : null;
+  const user = userId ? await dbHelpers.findUser({ id: userId }) : null;
   const customKeys = user?.keys || null;
 
   console.log(`\n📡 Pipeline | user: ${user?.username || 'system'} | cats: ${categories.join(",")} | count: ${count}`);
